@@ -167,6 +167,8 @@
 <tr><td>Wrong sign in the longitude: <code>3.6410178</code> instead of a negative value. The UTM X coordinate () confirms the point is in Madrid.</td><td>Basic facilities, <code>PK 50334831</code> (Instalación Deportiva Municipal Básica Parque Forestal Valdebebas Patinaje)</td><td>Correct the sign (or recompute from UTM) before generating RDF</td></tr>
 <tr><td>The district name column contains the literal text "DISTRITO" instead of a district. <code>COD-DISTRITO</code> and <code>BARRIO</code> are empty in the same rows. These facilities are mostly located in parks and squares (for example Casa de Campo, Pradolongo, Cerro Almodóvar).</td><td>Basic facilities, 21 rows</td><td>Do not create a district for these rows; assign it later from coordinates if needed</td></tr>
 <tr><td><code>COD-DISTRITO</code> missing (32 rows in total, 11 of them with a real district name)</td><td>Basic facilities</td><td>Derive the code from the district name</td></tr>
+<tr><td><code>COD-BARRIO</code> is the number of the neighbourhood inside its district, not a city-wide code: the same value (1 to 9) appears in every district. In a few cases the same district and number carry two spellings or two different names (for example <code>LA CONCEPCION</code> and <code>CONCEPCION</code>, <code>ANGELES</code> and <code>LOS ANGELES</code>).</td><td>All</td><td>Build the neighbourhood URI from district code and number (see 3.3); keep the name in the source spelling</td></tr>
+<tr><td>Three rows have a <code>COD-DISTRITO</code> that does not match the district name: <code>PK 50315352</code> (code 2, CENTRO), <code>PK 5567512</code> (code 1, USERA) and <code>PK 11350896</code> (code 19, VILLA DE VALLECAS)</td><td>Basic facilities</td><td>Trust the district name and use its official number</td></tr>
 <tr><td>Opening hours present in only 9 of 607 rows</td><td>Basic facilities</td><td>Optional property; no value when missing</td></tr>
 <tr><td>Phone present in 14 rows and e-mail in 6 rows</td><td>Basic facilities</td><td>Optional properties</td></tr>
 <tr><td>Postal code missing in 27 rows, street name in 6, number in 50</td><td>Basic facilities</td><td>Optional properties</td></tr>
@@ -196,7 +198,66 @@
 <p>The licence will be declared in the data with <code>dcterms:license &lt;https://creativecommons.org/licenses/by/4.0/&gt;</code> and the source with <code>dcterms:source</code> pointing to each original dataset page. A short attribution text will be included in the dataset description: <i>"Contains data of the Ayuntamiento de Madrid (datos.madrid.es), licensed under CC BY 4.0. Transformed to RDF by Group 08."</i></p>
 
 <h2>3. Resource naming strategy</h2>
-<p><i>(To be completed jointly with the ontology; see the ontology files in the <code>ontology</code> directory.)</i></p>
+<p>This section defines how the ontology and the individuals will be named. The ontology and the data are published under our own namespace, not under the default Protégé one (<code>http://www.semanticweb.org/...</code>). The domain used below is a placeholder under the reserved <code>example.org</code> domain: it is not deployed during this hands-on, so the redirections in 3.4 describe the design for the moment of publication.</p>
+
+<h3>3.1 Principles</h3>
+<ul>
+ <li><b>Ontology and data have different paths:</b> terms of the ontology live under <code>/ontology/</code> and individuals under <code>/resource/</code>.</li>
+ <li><b>Each class of individuals has its own path</b> (<code>facility</code>, <code>district</code>, <code>neighbourhood</code>...), so two individuals of different classes can never collide.</li>
+ <li><b>Individual URIs do not contain the URI of their class.</b> The URI is built only from the key of the source data, so it does not change if we later reclassify the individual.</li>
+ <li><b>Identifiers come from the source codes, never from names.</b> The names in the CSV are in upper case, without accents and can change; the codes (<code>PK</code>, <code>COD-DISTRITO</code>, <code>COD-BARRIO</code>, last segment of <code>TIPO</code>) are stable and need no escaping.</li>
+ <li>No file extensions, query strings or spaces in URIs. Path segments in lower camel case, class names in upper camel case, property names in lower camel case, all in English.</li>
+</ul>
+
+<h3>3.2 Namespaces</h3>
+<table>
+<tr><th>Prefix</th><th>Namespace</th><th>Use</th></tr>
+<tr><td><code>ms:</code></td><td><code>http://madridsports.example.org/ontology/madridsports#</code></td><td>Classes and properties of our ontology (hash URIs, because the ontology is a small single file)</td></tr>
+<tr><td><code>msr:</code></td><td><code>http://madridsports.example.org/resource/</code></td><td>All individuals (slash URIs)</td></tr>
+</table>
+
+<h3>3.3 URI patterns for individuals</h3>
+<table>
+<tr><th>Individuals of</th><th>Pattern</th><th>Built from</th><th>Example</th></tr>
+<tr><td>Sports facility</td><td><code>msr:facility/{PK}</code></td><td><code>PK</code> (unique in each file)</td><td><code>http://madridsports.example.org/resource/facility/72028</code></td></tr>
+<tr><td>District</td><td><code>msr:district/{COD-DISTRITO}</code></td><td>District code (1 to 21). It is taken from the district name when the code is missing or does not match the name (see 1.8)</td><td><code>.../resource/district/16</code></td></tr>
+<tr><td>Neighbourhood</td><td><code>msr:neighbourhood/{COD-DISTRITO}-{COD-BARRIO}</code></td><td>District code and neighbourhood number. <code>COD-BARRIO</code> is only the number of the neighbourhood inside its district (1 to 9), so it is not unique in the city and cannot be used alone</td><td><code>.../resource/neighbourhood/4-2</code></td></tr>
+<tr><td>Facility type</td><td><code>msr:facilityType/{TIPO}</code></td><td>Last segment of <code>TIPO</code> (31 distinct values in the three files, see 1.4)</td><td><code>.../resource/facilityType/PistaFutbolSala</code></td></tr>
+<tr><td>Accessibility level (codes 0 to 3)</td><td><code>msr:accessibilityLevel/{code}</code></td><td>Code in <code>ACCESIBILIDAD</code></td><td><code>.../resource/accessibilityLevel/2</code></td></tr>
+<tr><td>Accessibility feature (codes 4 to 6)</td><td><code>msr:accessibilityFeature/{code}</code></td><td>Code in <code>ACCESIBILIDAD</code></td><td><code>.../resource/accessibilityFeature/5</code></td></tr>
+<tr><td>City</td><td><code>msr:city/{name}</code></td><td>Lower-case name; used to link the districts with DBpedia and Wikidata</td><td><code>.../resource/city/madrid</code></td></tr>
+<tr><td>Dataset</td><td><code>msr:dataset/{name}</code></td><td>Description of the generated dataset (licence, sources, attribution)</td><td><code>.../resource/dataset/madridSports</code></td></tr>
+</table>
+<p>The examples use real values of the CSV files. The sample instantiation is in <code>ontology/madridsports-example.ttl</code>.</p>
+
+<h3>3.4 Content negotiation</h3>
+<p>Individuals use slash URIs that identify the thing itself (a facility, a district), so they are not served directly. A request to the URI is answered with a <code>303 See Other</code> redirect to a document about it, chosen with the <code>Accept</code> header:</p>
+<table>
+<tr><th>Request to</th><th><code>Accept</code> header</th><th>Redirects to</th></tr>
+<tr><td rowspan="3"><code>/resource/facility/72028</code></td><td><code>text/html</code></td><td><code>/page/facility/72028</code></td></tr>
+<tr><td><code>text/turtle</code></td><td><code>/data/facility/72028.ttl</code></td></tr>
+<tr><td><code>application/rdf+xml</code></td><td><code>/data/facility/72028.rdf</code></td></tr>
+<tr><td rowspan="2"><code>/ontology/madridsports</code></td><td><code>text/html</code></td><td>HTML documentation of the ontology</td></tr>
+<tr><td><code>text/turtle</code></td><td><code>madridsports.ttl</code></td></tr>
+</table>
+<p>The same rule applies to the other resource types (<code>district</code>, <code>neighbourhood</code>, ...). Terms of the ontology use hash URIs, so a request to <code>ms:SportsFacility</code> retrieves the whole ontology document and needs no per-term redirect.</p>
+
+<h3>3.5 Modelling decisions that affect the URIs</h3>
+<ul>
+ <li><b>One individual per <code>PK</code>, one path for all facilities.</b> As described in 1.7, 55 of the 56 pools are also in the sports centres file. If the URI contained the type (for example <code>/basicFacility/</code> or <code>/pool/</code>), the same place could get two URIs. With <code>/facility/{PK}</code> the type is given by the data (<code>rdf:type</code>), not by the URI.</li>
+ <li><b>Facility types, districts and accessibility values are individuals, not strings,</b> so that several facilities point to the same URI and the districts can later be linked to Wikidata and DBpedia.</li>
+ <li><b>The original page is kept as a link,</b> not as the identifier: <code>CONTENT-URL</code> will be stored with <code>dcterms:source</code> or <code>rdfs:seeAlso</code>.</li>
+ <li><b>Risk:</b> <code>PK</code> is an internal key of the municipal website, so if the City Council renumbers it our URIs would stop matching its data. We accept it because the key is the only identifier the source gives; the original codes are kept as literals.</li>
+</ul>
+
+<h3>3.6 Check against the rules</h3>
+<table>
+<tr><th>Rule</th><th>How it is met</th></tr>
+<tr><td>Do not use the default Protégé domain</td><td>Own namespace <code>madridsports.example.org</code></td></tr>
+<tr><td>Different paths for ontology resources and individuals</td><td><code>/ontology/</code> versus <code>/resource/</code></td></tr>
+<tr><td>Different paths for individuals of different classes</td><td><code>facility</code>, <code>district</code>, <code>neighbourhood</code>, <code>facilityType</code>, <code>accessibilityLevel</code>, <code>accessibilityFeature</code></td></tr>
+<tr><td>Individual URIs independent of class URIs</td><td>Only the source key is used in the URI; the class URI never appears in it</td></tr>
+</table>
 
 </body>
 </html>
