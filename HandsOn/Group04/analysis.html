@@ -278,7 +278,72 @@
   </section>
   <section id="resource-naming">
     <h2>3. Resource naming strategy</h2>
-    <p>Pending completion by the members responsible for resource naming.</p>
+
+    <h3>3.1 Domain</h3>
+    <p>The chosen domain is <code>breathemadrid.es</code>, named after the application BreatheMadrid. It is not the default domain provided by Protégé or Chowlk.</p>
+
+    <h3>3.2 Ontology URI pattern (classes and properties)</h3>
+    <p>Ontology resources use <strong>hash URIs</strong> under a single namespace:</p>
+    <pre>http://breathemadrid.es/ontology#{ClassName}
+http://breathemadrid.es/ontology#{propertyName}</pre>
+    <p>This allows the entire ontology to be served from a single document. Class names start with a capital letter and property names start with a lowercase letter.</p>
+    <p>Prefix used in Turtle files: <code>@prefix bm: &lt;http://breathemadrid.es/ontology#&gt; .</code></p>
+
+    <h3>3.3 Individual URI pattern (instances)</h3>
+    <p>Individuals use <strong>slash URIs</strong> under a separate path, ensuring a clear separation between the ontology schema and the instance data:</p>
+    <pre>http://breathemadrid.es/resource/{class-path}/{identifier}</pre>
+    <p>Prefix used in Turtle files: <code>@prefix bmr: &lt;http://breathemadrid.es/resource/&gt; .</code></p>
+
+    <p>Each class has its own path segment so that individuals of different classes never share the same URI pattern:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Class</th>
+          <th>URI pattern</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Municipality</td>
+          <td><code>resource/municipality/{code}</code></td>
+          <td><code>resource/municipality/28079</code></td>
+        </tr>
+        <tr>
+          <td>Station</td>
+          <td><code>resource/station/{code}</code></td>
+          <td><code>resource/station/28079004</code></td>
+        </tr>
+        <tr>
+          <td>StationType</td>
+          <td><code>resource/stationtype/{typeCode}</code></td>
+          <td><code>resource/stationtype/UT</code></td>
+        </tr>
+        <tr>
+          <td>Pollutant</td>
+          <td><code>resource/pollutant/{magnitudeCode}</code></td>
+          <td><code>resource/pollutant/8</code></td>
+        </tr>
+        <tr>
+          <td>Observation</td>
+          <td><code>resource/observation/{samplingPoint}/{date}/{hour}</code></td>
+          <td><code>resource/observation/28079004_10_A/2026-10-01/H01</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>3.4 Linking to external entities</h3>
+    <p>Municipality individuals are linked to their Wikidata counterpart using <code>owl:sameAs</code>. For example, Madrid is linked to <code>http://www.wikidata.org/entity/Q2807</code>.</p>
+
+    <h3>3.5 Ontology reuse</h3>
+    <p>The ontology reuses existing vocabularies through <code>rdfs:subClassOf</code>:</p>
+    <ul>
+      <li><code>bm:Station rdfs:subClassOf sosa:Platform</code></li>
+      <li><code>bm:Observation rdfs:subClassOf sosa:Observation</code></li>
+      <li><code>bm:Pollutant rdfs:subClassOf sosa:ObservableProperty</code></li>
+      <li><code>bm:Municipality rdfs:subClassOf dbo:Municipality</code></li>
+    </ul>
   </section>
 </body>
 </html>
