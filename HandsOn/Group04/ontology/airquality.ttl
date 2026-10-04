@@ -22,6 +22,11 @@ ns:dateTime a owl:DatatypeProperty ;
     rdfs:domain ns:Observation ;
     rdfs:range xsd:dateTime .
 
+ns:hasStationType a owl:ObjectProperty ;
+    rdfs:label "has station type" ;
+    rdfs:domain ns:Station ;
+    rdfs:range ns:StationType .
+
 ns:isValid a owl:DatatypeProperty ;
     rdfs:label "is valid" ;
     rdfs:domain ns:Observation ;
@@ -87,9 +92,14 @@ ns:stationName a owl:DatatypeProperty ;
     rdfs:domain ns:Station ;
     rdfs:range xsd:string .
 
-ns:stationType a owl:DatatypeProperty ;
-    rdfs:label "station type" ;
-    rdfs:domain ns:Station ;
+ns:typeCode a owl:DatatypeProperty ;
+    rdfs:label "type code" ;
+    rdfs:domain ns:StationType ;
+    rdfs:range xsd:string .
+
+ns:typeName a owl:DatatypeProperty ;
+    rdfs:label "type name" ;
+    rdfs:domain ns:StationType ;
     rdfs:range xsd:string .
 
 ns:unit a owl:DatatypeProperty ;
@@ -104,6 +114,9 @@ ns:value a owl:DatatypeProperty ;
 
 ns:Municipality a owl:Class ;
     rdfs:label "Municipality" .
+
+ns:StationType a owl:Class ;
+    rdfs:label "Station Type" .
 
 ns:Observation a owl:Class ;
     rdfs:label "Observation" .
