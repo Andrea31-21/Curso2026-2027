@@ -1,129 +1,150 @@
+@prefix bm: <http://breathemadrid.es/ontology#> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix mod: <https://w3id.org/mod#> .
-@prefix ns: <http://breathemadrid.es/ontology#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns: a owl:Ontology ;
+bm: a owl:Ontology ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
     mod:createdWith <https://chowlk.linkeddata.es/> .
 
-ns:address a owl:DatatypeProperty ;
+bm:address a owl:DatatypeProperty ;
     rdfs:label "address" ;
-    rdfs:domain ns:Station ;
+    rdfs:domain bm:Station ;
     rdfs:range xsd:string .
 
-ns:altitude a owl:DatatypeProperty ;
+bm:altitude a owl:DatatypeProperty ;
     rdfs:label "altitude" ;
-    rdfs:domain ns:Station ;
+    rdfs:domain bm:Station ;
     rdfs:range xsd:integer .
 
-ns:dateTime a owl:DatatypeProperty ;
+bm:dateTime a owl:DatatypeProperty ;
     rdfs:label "date time" ;
-    rdfs:domain ns:Observation ;
+    rdfs:domain bm:Observation ;
     rdfs:range xsd:dateTime .
 
-ns:hasStationType a owl:ObjectProperty ;
+bm:hasStationType a owl:ObjectProperty ;
     rdfs:label "has station type" ;
-    rdfs:domain ns:Station ;
-    rdfs:range ns:StationType .
+    rdfs:domain bm:Station ;
+    rdfs:range bm:StationType .
 
-ns:isValid a owl:DatatypeProperty ;
+bm:isValid a owl:DatatypeProperty ;
     rdfs:label "is valid" ;
-    rdfs:domain ns:Observation ;
+    rdfs:domain bm:Observation ;
     rdfs:range xsd:boolean .
 
-ns:latitude a owl:DatatypeProperty ;
+bm:latitude a owl:DatatypeProperty ;
     rdfs:label "latitude" ;
-    rdfs:domain ns:Station ;
+    rdfs:domain bm:Station ;
     rdfs:range xsd:float .
 
-ns:locatedIn a owl:ObjectProperty ;
+bm:locatedIn a owl:ObjectProperty ;
     rdfs:label "located in" ;
-    rdfs:domain ns:Station ;
-    rdfs:range ns:Municipality .
+    rdfs:domain bm:Station ;
+    rdfs:range bm:Municipality .
 
-ns:longitude a owl:DatatypeProperty ;
+bm:longitude a owl:DatatypeProperty ;
     rdfs:label "longitude" ;
-    rdfs:domain ns:Station ;
+    rdfs:domain bm:Station ;
     rdfs:range xsd:float .
 
-ns:measuresPollutant a owl:ObjectProperty ;
+bm:measuresPollutant a owl:ObjectProperty ;
     rdfs:label "measures pollutant" ;
-    rdfs:domain ns:Station ;
-    rdfs:range ns:Pollutant .
+    rdfs:domain bm:Station ;
+    rdfs:range bm:Pollutant .
 
-ns:municipalityCode a owl:DatatypeProperty ;
+bm:municipalityCode a owl:DatatypeProperty ;
     rdfs:label "municipality code" ;
-    rdfs:domain ns:Municipality ;
+    rdfs:domain bm:Municipality ;
     rdfs:range xsd:string .
 
-ns:municipalityName a owl:DatatypeProperty ;
+bm:municipalityName a owl:DatatypeProperty ;
     rdfs:label "municipality name" ;
-    rdfs:domain ns:Municipality ;
+    rdfs:domain bm:Municipality ;
     rdfs:range xsd:string .
 
-ns:observedAt a owl:ObjectProperty ;
+bm:observedAt a owl:ObjectProperty ;
     rdfs:label "observed at" ;
-    rdfs:domain ns:Observation ;
-    rdfs:range ns:Station .
+    rdfs:domain bm:Observation ;
+    rdfs:range bm:Station .
 
-ns:observesPollutant a owl:ObjectProperty ;
+bm:observesPollutant a owl:ObjectProperty ;
     rdfs:label "observes pollutant" ;
-    rdfs:domain ns:Observation ;
-    rdfs:range ns:Pollutant .
+    rdfs:domain bm:Observation ;
+    rdfs:range bm:Pollutant .
 
-ns:pollutantCode a owl:DatatypeProperty ;
+bm:pollutantCode a owl:DatatypeProperty ;
     rdfs:label "pollutant code" ;
-    rdfs:domain ns:Pollutant ;
-    rdfs:range xsd:integer .
+    rdfs:domain bm:Pollutant ;
+    rdfs:range xsd:string .
 
-ns:pollutantName a owl:DatatypeProperty ;
+bm:pollutantName a owl:DatatypeProperty ;
     rdfs:label "pollutant name" ;
-    rdfs:domain ns:Pollutant ;
+    rdfs:domain bm:Pollutant ;
     rdfs:range xsd:string .
 
-ns:stationCode a owl:DatatypeProperty ;
+bm:stationCode a owl:DatatypeProperty ;
     rdfs:label "station code" ;
-    rdfs:domain ns:Station ;
-    rdfs:range xsd:integer .
+    rdfs:domain bm:Station ;
+    rdfs:range xsd:string .
 
-ns:stationName a owl:DatatypeProperty ;
+bm:stationName a owl:DatatypeProperty ;
     rdfs:label "station name" ;
-    rdfs:domain ns:Station ;
+    rdfs:domain bm:Station ;
     rdfs:range xsd:string .
 
-ns:typeCode a owl:DatatypeProperty ;
+bm:typeCode a owl:DatatypeProperty ;
     rdfs:label "type code" ;
-    rdfs:domain ns:StationType ;
+    rdfs:domain bm:StationType ;
     rdfs:range xsd:string .
 
-ns:typeName a owl:DatatypeProperty ;
+bm:typeName a owl:DatatypeProperty ;
     rdfs:label "type name" ;
-    rdfs:domain ns:StationType ;
+    rdfs:domain bm:StationType ;
     rdfs:range xsd:string .
 
-ns:unit a owl:DatatypeProperty ;
+bm:unit a owl:DatatypeProperty ;
     rdfs:label "unit" ;
-    rdfs:domain ns:Pollutant ;
+    rdfs:domain bm:Pollutant ;
     rdfs:range xsd:string .
 
-ns:value a owl:DatatypeProperty ;
+bm:value a owl:DatatypeProperty ;
     rdfs:label "value" ;
-    rdfs:domain ns:Observation ;
+    rdfs:domain bm:Observation ;
     rdfs:range xsd:float .
 
-ns:Municipality a owl:Class ;
+dcterms:license a owl:AnnotationProperty .
+
+dbo:Municipality a owl:Class ;
     rdfs:label "Municipality" .
 
-ns:StationType a owl:Class ;
-    rdfs:label "Station Type" .
+sosa:ObservableProperty a owl:Class ;
+    rdfs:label "Observable Property" .
 
-ns:Observation a owl:Class ;
+sosa:Observation a owl:Class ;
     rdfs:label "Observation" .
 
-ns:Pollutant a owl:Class ;
-    rdfs:label "Pollutant" .
+sosa:Platform a owl:Class ;
+    rdfs:label "Platform" .
 
-ns:Station a owl:Class ;
-    rdfs:label "Station" .
+bm:Municipality a owl:Class ;
+    rdfs:label "Municipality" ;
+    rdfs:subClassOf dbo:Municipality .
 
+bm:StationType a owl:Class ;
+    rdfs:label "Station Type" .
+
+bm:Observation a owl:Class ;
+    rdfs:label "Observation" ;
+    rdfs:subClassOf sosa:Observation .
+
+bm:Pollutant a owl:Class ;
+    rdfs:label "Pollutant" ;
+    rdfs:subClassOf sosa:ObservableProperty .
+
+bm:Station a owl:Class ;
+    rdfs:label "Station" ;
+    rdfs:subClassOf sosa:Platform .
