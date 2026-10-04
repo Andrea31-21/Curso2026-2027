@@ -1,0 +1,116 @@
+@prefix mod: <https://w3id.org/mod#> .
+@prefix ns: <http://breathemadrid.es/ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns: a owl:Ontology ;
+    mod:createdWith <https://chowlk.linkeddata.es/> .
+
+ns:address a owl:DatatypeProperty ;
+    rdfs:label "address" ;
+    rdfs:domain ns:Station ;
+    rdfs:range xsd:string .
+
+ns:altitude a owl:DatatypeProperty ;
+    rdfs:label "altitude" ;
+    rdfs:domain ns:Station ;
+    rdfs:range xsd:integer .
+
+ns:dateTime a owl:DatatypeProperty ;
+    rdfs:label "date time" ;
+    rdfs:domain ns:Observation ;
+    rdfs:range xsd:dateTime .
+
+ns:isValid a owl:DatatypeProperty ;
+    rdfs:label "is valid" ;
+    rdfs:domain ns:Observation ;
+    rdfs:range xsd:boolean .
+
+ns:latitude a owl:DatatypeProperty ;
+    rdfs:label "latitude" ;
+    rdfs:domain ns:Station ;
+    rdfs:range xsd:float .
+
+ns:locatedIn a owl:ObjectProperty ;
+    rdfs:label "located in" ;
+    rdfs:domain ns:Station ;
+    rdfs:range ns:Municipality .
+
+ns:longitude a owl:DatatypeProperty ;
+    rdfs:label "longitude" ;
+    rdfs:domain ns:Station ;
+    rdfs:range xsd:float .
+
+ns:measuresPollutant a owl:ObjectProperty ;
+    rdfs:label "measures pollutant" ;
+    rdfs:domain ns:Station ;
+    rdfs:range ns:Pollutant .
+
+ns:municipalityCode a owl:DatatypeProperty ;
+    rdfs:label "municipality code" ;
+    rdfs:domain ns:Municipality ;
+    rdfs:range xsd:string .
+
+ns:municipalityName a owl:DatatypeProperty ;
+    rdfs:label "municipality name" ;
+    rdfs:domain ns:Municipality ;
+    rdfs:range xsd:string .
+
+ns:observedAt a owl:ObjectProperty ;
+    rdfs:label "observed at" ;
+    rdfs:domain ns:Observation ;
+    rdfs:range ns:Station .
+
+ns:observesPollutant a owl:ObjectProperty ;
+    rdfs:label "observes pollutant" ;
+    rdfs:domain ns:Observation ;
+    rdfs:range ns:Pollutant .
+
+ns:pollutantCode a owl:DatatypeProperty ;
+    rdfs:label "pollutant code" ;
+    rdfs:domain ns:Pollutant ;
+    rdfs:range xsd:integer .
+
+ns:pollutantName a owl:DatatypeProperty ;
+    rdfs:label "pollutant name" ;
+    rdfs:domain ns:Pollutant ;
+    rdfs:range xsd:string .
+
+ns:stationCode a owl:DatatypeProperty ;
+    rdfs:label "station code" ;
+    rdfs:domain ns:Station ;
+    rdfs:range xsd:integer .
+
+ns:stationName a owl:DatatypeProperty ;
+    rdfs:label "station name" ;
+    rdfs:domain ns:Station ;
+    rdfs:range xsd:string .
+
+ns:stationType a owl:DatatypeProperty ;
+    rdfs:label "station type" ;
+    rdfs:domain ns:Station ;
+    rdfs:range xsd:string .
+
+ns:unit a owl:DatatypeProperty ;
+    rdfs:label "unit" ;
+    rdfs:domain ns:Pollutant ;
+    rdfs:range xsd:string .
+
+ns:value a owl:DatatypeProperty ;
+    rdfs:label "value" ;
+    rdfs:domain ns:Observation ;
+    rdfs:range xsd:float .
+
+ns:Municipality a owl:Class ;
+    rdfs:label "Municipality" .
+
+ns:Observation a owl:Class ;
+    rdfs:label "Observation" .
+
+ns:Pollutant a owl:Class ;
+    rdfs:label "Pollutant" .
+
+ns:Station a owl:Class ;
+    rdfs:label "Station" .
+
