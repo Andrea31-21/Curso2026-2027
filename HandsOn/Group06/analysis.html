@@ -60,6 +60,115 @@
 
   <p>The two files use the same schema. This allows libraries and museums to share a general <code>CulturalSite</code> model while keeping separate classes for each type.</p>
 
+  <h3>1.2 Schema</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Column</th>
+        <th>Type</th>
+        <th>Comments</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>PK</td>
+        <td>string</td>
+        <td>Identifier for each museum and library.</td>
+      </tr>
+      <tr>
+        <td>NOMBRE</td>
+        <td>string</td>
+        <td>Name for each museum and library.</td>
+      </tr>
+      <tr>
+        <td>DESCRIPCION-ENTIDAD</td>
+        <td>string</td>
+        <td>Brief description for each museum and library (Some of them have no description).</td>
+      </tr>
+      <tr>
+        <td>HORARIO</td>
+        <td>string</td>
+        <td>Days and hours of opening for each museum and library.</td>
+      </tr>
+      <tr>
+        <td>TRANSPORTE</td>
+        <td>string</td>
+        <td>Transport methods that are nearby each museum and library.</td>
+      </tr>
+      <tr>
+        <td>ACCESIBILIDAD</td>
+        <td>boolean</td>
+        <td>The accessibility of each museum and library. As it can be a combination of numbers from 0 to 6 divided by a comma, each number having a meaning, this column will be separated into 6 columns and each one will have assigned a boolean value depending of the numbers that were in the original column.</td>
+      </tr>
+      <tr>
+        <td>CONTENT-URL</td>
+        <td>url</td>
+        <td>Official website containing information of each museum and library.</td>
+      </tr>
+      <tr>
+        <td>NOMBRE-VIA, CLASE-VIAL, NUM</td>
+        <td>string</td>
+        <td>Street address of each museum and library. These three columns will be combined into a single one.</td>
+      </tr>
+      <tr>
+        <td>CODIGO-POSTAL</td>
+        <td>string</td>
+        <td>Postal code for each museum and library.</td>
+      </tr>
+      <tr>
+        <td>COD-BARRIO</td>
+        <td>string</td>
+        <td>Identifier for each neighborhood.</td>
+      </tr>
+      <tr>
+        <td>BARRIO</td>
+        <td>string</td>
+        <td>Name of the neighborhood each museum and library is located in.</td>
+      </tr>
+      <tr>
+        <td>COD-DISTRITO</td>
+        <td>string</td>
+        <td>Identifier for each district.</td>
+      </tr>
+      <tr>
+        <td>DISTRICT</td>
+        <td>string</td>
+        <td>Name of the district each museum and library is located in.</td>
+      </tr>
+      <tr>
+        <td>LATITUD</td>
+        <td>decimal</td>
+        <td>The latitude of each museum and library.</td>
+      </tr>
+      <tr>
+        <td>LONGITUD</td>
+        <td>decimal</td>
+        <td>The longitude of each museum and library.</td>
+      </tr>
+      <tr>
+        <td>TELEFONO</td>
+        <td>string</td>
+        <td>The telephone of each museum and library (Some have to be cleaned as they containg text).</td>
+      </tr>
+      <tr>
+        <td>FAX</td>
+        <td>string</td>
+        <td>The fax number of each museum and library (Some have no fax number).</td>
+      </tr>
+      <tr>
+        <td>EMAIL</td>
+        <td>string</td>
+        <td>The email of each museum and library.</td>
+      </tr>
+      <tr>
+        <td>TIPO</td>
+        <td>string</td>
+        <td>Type of establishment (The data in the column needs to be modified to only get the last word in the text). Only useful in museums as the libraries all have the same type</td>
+      </tr>
+    </tbody>
+  </table>  
+
+  <p>Some of the columns have not been included in the schema because they contain almost no values or are not necessary.</p>
 
   <h2>2. Licensing analysis</h2>
 
