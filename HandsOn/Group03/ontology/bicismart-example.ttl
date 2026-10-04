@@ -13,7 +13,7 @@ bm: a owl:Ontology ;
     mod:createdWith <https://chowlk.linkeddata.es/> .
 
 bmres:station1 a owl:NamedIndividual,
-        bm:StationState ;
+        bm:BikeStation ;
     rdfs:label "2 - Metro Callao"^^xsd:string ;
     bm:hasPoint bmres:geometryStation1 ;
     bm:hasState bmres:stationState1 ;
@@ -22,9 +22,9 @@ bmres:station1 a owl:NamedIndividual,
     bm:totalCapacity 27 .
 
 bmres:geometryStation1 a owl:NamedIndividual,
-        bm:StationState ;
-    geo1:lat -3.70569e+00 ;
-    geo1:long 4.04204e+01 .
+        bm:Point ;
+    geo1:lat 4.04204e+01 ;
+    geo1:long -3.70569e+00 .
 
 bmres:stationState1 a owl:NamedIndividual,
         bm:StationState ;
@@ -33,9 +33,9 @@ bmres:stationState1 a owl:NamedIndividual,
     bm:unavailableBases 0 .
 
 bmres:street507100 a owl:NamedIndividual,
-        bm:StationState ;
+        bm:Street ;
     bm:districtCode 1 ;
-    bm:neighbourhoodCode 5 ;
+    bm:neighborhoodCode 5 ;
     bm:postalCode "28004"^^xsd:string ;
     bm:streetCode 507100 ;
     bm:streetName "CALLE MIGUEL MOYA"^^xsd:string .
